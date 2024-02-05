@@ -51,7 +51,7 @@ function simpleScorer (word) {
          simplePoints = simplePoints + 1
       } 
    }
-   return `${word} is ${simplePoints} points`
+   return simplePoints
 };
 
 function vowelBonusScorer (word) {
@@ -65,7 +65,7 @@ let vowelTotalPoints = 0;
       }
    }
 
-   return `${word} is ${vowelTotalPoints} points`
+   return vowelTotalPoints
 };
 
 let scrabbleScorer;
@@ -105,14 +105,24 @@ finalScore = scoringAlgorithms[userAnswer2].scorerFunction(word);
 }
 
 function transform(pointStructureObject) {
+let transformedObject= {};
 
+   for (key in pointStructureObject) {
+
+      for (let i = 0; i < pointStructureObject[key].length; i++){
+         let letter = pointStructureObject[key][i].toLowerCase();
+         transformedObject[letter] = Number(key);
+      }
+   } 
+
+   return transformedObject
 };
 
 let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
 console.log(scorerPrompt(initialPrompt()))
-
+//console.log(transform(oldPointStructure));
 }
 
 // Don't write any code below this line //
