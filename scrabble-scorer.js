@@ -68,7 +68,17 @@ let vowelTotalPoints = 0;
    return vowelTotalPoints
 };
 
-let scrabbleScorer;
+function scrabbleScorer (word) {
+   word = word.toLowerCase();
+   let newPoints = 0;
+
+   for (let i = 0; i < word.length; i++) {
+      if (Object.keys(newPointStructure).includes(word[i])) {
+         newPoints += newPointStructure[word[i]];
+      }
+   }
+   return newPoints;
+}
 
 
 let scoreSystemZero = {
@@ -86,8 +96,13 @@ let scoreSystemTwo = {
    "description": "The traditional scoring algorithm.",
    "scorerFunction": oldScrabbleScorer
 };
+let newScoreSystemTwo = {
+   "name": "New Scrabble Scorer",
+   "description": "The new scrabble algorithm",
+   "scorerFunction": scrabbleScorer
+};
 
-const scoringAlgorithms = [scoreSystemZero, scoreSystemOne, scoreSystemTwo];
+const scoringAlgorithms = [scoreSystemZero, scoreSystemOne, newScoreSystemTwo];
 
 function scorerPrompt(word) {
    let finalScore = 0
@@ -99,7 +114,7 @@ function scorerPrompt(word) {
     Enter a number from above: `);
 
 console.log("Algorithm name: " , scoringAlgorithms[userAnswer2].name); 
-console.log("scorerFunction result: ");
+console.log(`scorerFunction result for '${word}': `);
 finalScore = scoringAlgorithms[userAnswer2].scorerFunction(word);
    return finalScore
 }
